@@ -969,7 +969,7 @@ void DS_FileTransmit(DS_AppFileStatus_t *FileStatus)
     */
     if (PktBuf != NULL)
     {
-        CFE_MSG_Init(&PktBuf->Pkt.TlmHeader.Msg, CFE_SB_ValueToMsgId(DS_COMP_TLM_MID), sizeof(*PktBuf));
+        CFE_MSG_Init(CFE_MSG_PTR(PktBuf->Pkt), CFE_SB_ValueToMsgId(DS_COMP_TLM_MID), sizeof(*PktBuf));
 
         /*
         ** Set file age and size...
@@ -1000,7 +1000,7 @@ void DS_FileTransmit(DS_AppFileStatus_t *FileStatus)
         /*
         ** Timestamp and send file info telemetry...
         */
-        CFE_SB_TimeStampMsg(&PktBuf->Pkt.TlmHeader.Msg);
+        CFE_SB_TimeStampMsg(CFE_MSG_PTR(PktBuf->Pkt));
         CFE_SB_TransmitBuffer(&PktBuf->SBBuf, true);
     }
 }
